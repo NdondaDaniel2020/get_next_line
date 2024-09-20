@@ -39,14 +39,19 @@ char	*ft_read_str(int fd, char *str)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*str[214748364];
+	static char	*str[4069];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	str[fd] = ft_read_str(fd, str[fd]);
 	if (!str[fd] || !*str[fd])
+	{
+		free(str[fd]);
 		return (NULL);
+	}
 	line = ft_get_line(str[fd]);
 	str[fd] = ft_get_new_str(str[fd]);
+	if (!str[fd])
+		return (NULL);
 	return (line);
 }
